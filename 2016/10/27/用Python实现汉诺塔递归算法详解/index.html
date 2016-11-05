@@ -1,0 +1,745 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+  <meta name="google-site-verification" content="iK6iTrVDYO6kZoRuIqj5ZGnDtsZG75s7BeiFEIf3OZ8" />
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Python,算法," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="简介汉诺塔，又称河内塔， 是根据一个传说形成的数学问题：
+
+有三根柱子 A， B， C。A 杆上有 N 个（N &amp;gt; 1）穿圆孔盘，盘的尺寸又下到上依次变小。要按照下列规则将所有圆盘移至 C 杆：
+
+1.每次只能移动一个圆盘；
+2.大盘不能叠在小盘上面。
+
+问： 如何移？最少需要移动多少字？
+
+​                                        —— 摘自 维基百">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用Python实现汉诺塔递归算法详解">
+<meta property="og:url" content="duanxs.com/2016/10/27/用Python实现汉诺塔递归算法详解/index.html">
+<meta property="og:site_name" content="Duanxs">
+<meta property="og:description" content="简介汉诺塔，又称河内塔， 是根据一个传说形成的数学问题：
+
+有三根柱子 A， B， C。A 杆上有 N 个（N &amp;gt; 1）穿圆孔盘，盘的尺寸又下到上依次变小。要按照下列规则将所有圆盘移至 C 杆：
+
+1.每次只能移动一个圆盘；
+2.大盘不能叠在小盘上面。
+
+问： 如何移？最少需要移动多少字？
+
+​                                        —— 摘自 维基百">
+<meta property="og:image" content="https://duanxs.oss-cn-qingdao.aliyuncs.com/blog/1.png">
+<meta property="og:image" content="https://duanxs.oss-cn-qingdao.aliyuncs.com/blog/2.png">
+<meta property="og:image" content="https://duanxs.oss-cn-qingdao.aliyuncs.com/blog/3.png">
+<meta property="og:image" content="https://duanxs.oss-cn-qingdao.aliyuncs.com/blog/4.png">
+<meta property="og:updated_time" content="2016-10-27T14:59:48.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用Python实现汉诺塔递归算法详解">
+<meta name="twitter:description" content="简介汉诺塔，又称河内塔， 是根据一个传说形成的数学问题：
+
+有三根柱子 A， B， C。A 杆上有 N 个（N &amp;gt; 1）穿圆孔盘，盘的尺寸又下到上依次变小。要按照下列规则将所有圆盘移至 C 杆：
+
+1.每次只能移动一个圆盘；
+2.大盘不能叠在小盘上面。
+
+问： 如何移？最少需要移动多少字？
+
+​                                        —— 摘自 维基百">
+<meta name="twitter:image" content="https://duanxs.oss-cn-qingdao.aliyuncs.com/blog/1.png">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 6346095177727215000,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> 用Python实现汉诺塔递归算法详解 | Duanxs </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">Duanxs</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">Nothing</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                用Python实现汉诺塔递归算法详解
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-27T17:55:21+08:00" content="2016-10-27">
+              2016-10-27
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/27/用Python实现汉诺塔递归算法详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/27/用Python实现汉诺塔递归算法详解/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p><strong>汉诺塔</strong>，又称<strong>河内塔</strong>， 是根据一个传说形成的数学问题：</p>
+<blockquote>
+<p>有三根柱子 A， B， C。A 杆上有 N 个（N &gt; 1）穿圆孔盘，盘的尺寸又下到上依次变小。要按照下列规则将所有圆盘移至 C 杆：</p>
+<blockquote>
+<p>1.每次只能移动一个圆盘；</p>
+<p>2.大盘不能叠在小盘上面。</p>
+</blockquote>
+<p>问： 如何移？最少需要移动多少字？</p>
+</blockquote>
+<p>​                                        —— 摘自 <a href="https://zh.wikipedia.org/wiki/%E6%B1%89%E8%AF%BA%E5%A1%94" target="_blank" rel="external">维基百科</a>（<em>自备梯子</em>）</p>
+<p> <img src="https://duanxs.oss-cn-qingdao.aliyuncs.com/blog/1.png" alt="1"></p>
+<h2 id="汉诺塔Python代码"><a href="#汉诺塔Python代码" class="headerlink" title="汉诺塔Python代码"></a>汉诺塔Python代码</h2><p>先亮代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">hanoi</span><span class="params">(n, a, b, c)</span>:</span></div><div class="line">    <span class="keyword">if</span> n == <span class="number">1</span>:</div><div class="line">        <span class="keyword">print</span> a, <span class="string">'--&gt;'</span>, c</div><div class="line">        <span class="keyword">return</span></div><div class="line">    hanoi(n<span class="number">-1</span>, a, c, b)</div><div class="line">    <span class="keyword">print</span> a, <span class="string">'--&gt;'</span>, c</div><div class="line">    hanoi(n<span class="number">-1</span>, b, a, c)</div><div class="line">hanoi(<span class="number">4</span>, <span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>)</div></pre></td></tr></table></figure>
+<h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><p>解法的基本思想是<strong>递归</strong>。</p>
+<p> 现有 A，B，C 三塔，A 塔有 x 个圆盘，目标是把这这些圆盘全部移到 C 塔。要求小盘必须在大盘之上，故而必然会有一步使一大坨 （x - 1）个盘子在 B 塔 上，以便 A 塔最大的盘子移到 C 塔。</p>
+<p> <img src="https://duanxs.oss-cn-qingdao.aliyuncs.com/blog/2.png" alt="one"></p>
+<p>至此，第一步完成。</p>
+<p>为方便理解，让我们从头开始，把 B 塔（x - 1）个盘子看成 y 个，即：</p>
+<p>现有 B， A， C 三塔，B 塔有 y 个圆盘，目标是把这些圆盘全部移到 C 塔。要求小盘必须在大盘之上，故而必然会有一步使一大坨 （y - 1）个盘子在 A 塔上，以便 B 塔最大的盘子移到 C 塔。</p>
+<p> <img src="https://duanxs.oss-cn-qingdao.aliyuncs.com/blog/3.png" alt="two"></p>
+<p>至此，第二步完成。</p>
+<p>第三步，还是从头开始，把 A 塔上 （y - 1）个盘子看成 z 个， 即：</p>
+<p>现有 A，B， C 三塔，A 塔有 z 个圆盘，目标是把这些圆盘全部移到 C 塔。要求小盘必须在大盘之上，故而必然会有一步使一大坨 （z - 1）个盘子在 A 塔上，以便 A 塔最大的盘子移到 C 塔。</p>
+<p>至此，第三步完成。相信聪明的小伙伴已经看出来了，只要不断重复第一第二步，周而复始，即可解出此题。</p>
+<h3 id="详解-Python-算法"><a href="#详解-Python-算法" class="headerlink" title="详解 Python 算法"></a>详解 Python 算法</h3><p>故，可以以此规律设计出 Python 程序算法：</p>
+<blockquote>
+<p>首先定义一个汉诺塔移动函数 ，<code>hanoi(n, a, b, c)</code>， <code>n</code>代表 A 塔上盘子个数，<code>a</code>代表 A 塔（初始塔）， <code>b</code>带表 B 塔（缓存塔）， <code>c</code>代表 C 塔（目标塔）。</p>
+<p>递归总是要有终止条件的，显而易见，就是当<strong>初始塔</strong>上只有一个最大盘子的时候即终止本次递归并返回，并把<strong>初始塔</strong>最后一个盘子移到<strong>目标塔</strong>，即打印<code>print(a, &#39;--&gt;&#39;, c)</code>。</p>
+<p>首先来移动开始的（n - 1）个圆盘，为什么要这样移呢？玩多了就知道了，归纳总结出来的经验。怎么移呢？通过<strong>目标塔</strong>暂时存放到<strong>缓存塔</strong>，抽象出来的代码为<code>hanoi(n-1, a, c, b)</code>，此函数进入递归。</p>
+<p>不好理解？好吧，换一种方式写：<code>hanoi(n-1, a, c, b)</code>===<code>hanoi(n-1, 初始塔，缓存塔，目标塔)</code>，清楚了吧，就像上面说的，把 这（n-1）个盘子看成一局新游戏，切不可把 <code>a</code> <code>c</code> <code>b</code> 这几个<strong>形参</strong>当成<strong>实参</strong>，网上其他解析让人看的云里雾里的原因就在这。此时 A 塔为<strong>初始塔</strong>，B 塔为<strong>目标塔</strong>，C 塔为<strong>缓存塔</strong>，套用<code>初始塔上盘子通过目标塔暂存到缓存塔，以便最大盘移至目标塔</code> 这句话。</p>
+<p>接下来打印每次移动：<code>print(a, &#39;--&gt;&#39;, c)</code> ,换一种方式写：<code>print(初始塔, &#39;--&gt;&#39;, 目标塔)</code>，同样不要被形参带飞咯。。。</p>
+<p>这不，A 塔上 （n-1）个盘子已经移到 B 塔上了，接下来当然要把 B 塔上的盘子移到 C 塔，这样才能完成汉诺塔这个游戏啊。想想此时<strong>初始塔</strong>、<strong>缓存塔</strong>、<strong>目标塔</strong>分别是 A、 B、 C 的哪一个？</p>
+<p>此时 B 塔是<strong>初始塔</strong>，A 塔是<strong>缓存塔</strong>， C 塔是<strong>目标塔</strong>，代码为：<code>hanoi(n-1, b, a, c)</code> 。</p>
+</blockquote>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">def hanoi(盘子个数, 初始塔, 缓存塔, 目标塔)</div><div class="line">    if 盘子个数 == 1:</div><div class="line">        print 初始塔,'移到', 目标塔</div><div class="line">        return</div><div class="line">    hanoi(盘子个数-1, 初始塔, 缓存塔, 目标塔)</div><div class="line">    print 初始塔,'移到', 目标塔</div><div class="line">    hanoi(盘子个数-1, 初始塔, 缓存塔, 目标塔)</div><div class="line">    </div><div class="line">def hanoi(n, a='A', b='B', c='C'): </div><div class="line">    if n == 1:</div><div class="line">        print a, '--&gt;', c</div><div class="line">        return</div><div class="line">    hanoi(n-1, a, c, b)</div><div class="line">    print  a, '--&gt;', c</div><div class="line">    hanoi(n-1, b, a, c)</div><div class="line">hanoi(4)</div></pre></td></tr></table></figure>
+<p>运行结果为：S</p>
+<p><img src="https://duanxs.oss-cn-qingdao.aliyuncs.com/blog/4.png" alt="结果"></p>
+<p>return 0;</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+  <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+    <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+    <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+      <span>赏</span>
+    </button>
+    <div id="QR" style="display: none;">
+      
+      
+        <div id="alipay" style="display: inline-block">
+          <img id="alipay_qr" src="https://duanxs.oss-cn-qingdao.aliyuncs.com/blog/alipay.png" alt="Duanxs Alipay"/>
+          <p>支付宝打赏</p>
+        </div>
+      
+    </div>
+  </div>
+
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag">#Python</a>
+          
+            <a href="/tags/算法/" rel="tag">#算法</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/09/12/hello-world/" rel="next" title="我的第一篇文章">
+                <i class="fa fa-chevron-left"></i> 我的第一篇文章
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/11/06/mac/" rel="prev" title="黑苹果安装不完全教程">
+                黑苹果安装不完全教程 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2016/10/27/用Python实现汉诺塔递归算法详解/"
+     data-title="用Python实现汉诺塔递归算法详解"
+     data-content=""
+     data-url="duanxs.com/2016/10/27/用Python实现汉诺塔递归算法详解/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/10/27/用Python实现汉诺塔递归算法详解/"
+           data-title="用Python实现汉诺塔递归算法详解" data-url="duanxs.com/2016/10/27/用Python实现汉诺塔递归算法详解/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.gif"
+               alt="Duanxs" />
+          <p class="site-author-name" itemprop="name">Duanxs</p>
+          <p class="site-description motion-element" itemprop="description">人生如棋</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/Duanxs" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://weibo.com/745680204" target="_blank" title="微博">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                  微博
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://twitter.com/duanxiaosong" target="_blank" title="Twitter">
+                  
+                    <i class="fa fa-fw fa-twitter"></i>
+                  
+                  Twitter
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#汉诺塔Python代码"><span class="nav-number">2.</span> <span class="nav-text">汉诺塔Python代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解析"><span class="nav-number">3.</span> <span class="nav-text">解析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#详解-Python-算法"><span class="nav-number">3.1.</span> <span class="nav-text">详解 Python 算法</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Duanxs</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"duanxs"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+  
+
+
+
+
+
+  
+  
+  
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+  </script>
+
+  <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+    });
+  </script>
+  <script type="text/javascript" src="//cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+
+  
+
+  
+
+</body>
+</html>
