@@ -114,7 +114,7 @@
 <meta property="og:image" content="https://duanxs.oss-cn-qingdao.aliyuncs.com/blog/2.png">
 <meta property="og:image" content="https://duanxs.oss-cn-qingdao.aliyuncs.com/blog/3.png">
 <meta property="og:image" content="https://duanxs.oss-cn-qingdao.aliyuncs.com/blog/4.png">
-<meta property="og:updated_time" content="2016-10-27T14:59:48.000Z">
+<meta property="og:updated_time" content="2016-11-05T18:25:13.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用Python实现汉诺塔递归算法详解">
 <meta name="twitter:description" content="简介汉诺塔，又称河内塔， 是根据一个传说形成的数学问题：
@@ -323,6 +323,7 @@
 </blockquote>
 <p>​                                        —— 摘自 <a href="https://zh.wikipedia.org/wiki/%E6%B1%89%E8%AF%BA%E5%A1%94" target="_blank" rel="external">维基百科</a>（<em>自备梯子</em>）</p>
 <p> <img src="https://duanxs.oss-cn-qingdao.aliyuncs.com/blog/1.png" alt="1"></p>
+<a id="more"></a>
 <h2 id="汉诺塔Python代码"><a href="#汉诺塔Python代码" class="headerlink" title="汉诺塔Python代码"></a>汉诺塔Python代码</h2><p>先亮代码：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">hanoi</span><span class="params">(n, a, b, c)</span>:</span></div><div class="line">    <span class="keyword">if</span> n == <span class="number">1</span>:</div><div class="line">        <span class="keyword">print</span> a, <span class="string">'--&gt;'</span>, c</div><div class="line">        <span class="keyword">return</span></div><div class="line">    hanoi(n<span class="number">-1</span>, a, c, b)</div><div class="line">    <span class="keyword">print</span> a, <span class="string">'--&gt;'</span>, c</div><div class="line">    hanoi(n<span class="number">-1</span>, b, a, c)</div><div class="line">hanoi(<span class="number">4</span>, <span class="string">'A'</span>, <span class="string">'B'</span>, <span class="string">'C'</span>)</div></pre></td></tr></table></figure>
 <h2 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h2><p>解法的基本思想是<strong>递归</strong>。</p>
@@ -523,7 +524,7 @@
           
             
               <span class="links-of-author-item">
-                <a href="https://github.com/Duanxs" target="_blank" title="GitHub">
+                <a href="http://github.com/Duanxs" target="_blank" title="GitHub">
                   
                     <i class="fa fa-fw fa-github"></i>
                   
