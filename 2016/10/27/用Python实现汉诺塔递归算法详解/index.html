@@ -319,7 +319,7 @@
 <p>1.每次只能移动一个圆盘；</p>
 <p>2.大盘不能叠在小盘上面。</p>
 </blockquote>
-<p>问： 如何移？最少需要移动多少字？</p>
+<p>问： 如何移？最少需要移动多少次？</p>
 </blockquote>
 <p>​                                        —— 摘自 <a href="https://zh.wikipedia.org/wiki/%E6%B1%89%E8%AF%BA%E5%A1%94" target="_blank" rel="external">维基百科</a>（<em>自备梯子</em>）</p>
 <p> <img src="https://duanxs.oss-cn-qingdao.aliyuncs.com/blog/1.png" alt="1"></p>
@@ -348,7 +348,7 @@
 <p>此时 B 塔是<strong>初始塔</strong>，A 塔是<strong>缓存塔</strong>， C 塔是<strong>目标塔</strong>，代码为：<code>hanoi(n-1, b, a, c)</code> 。</p>
 </blockquote>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">def hanoi(盘子个数, 初始塔, 缓存塔, 目标塔)</div><div class="line">    if 盘子个数 == 1:</div><div class="line">        print 初始塔,'移到', 目标塔</div><div class="line">        return</div><div class="line">    hanoi(盘子个数-1, 初始塔, 缓存塔, 目标塔)</div><div class="line">    print 初始塔,'移到', 目标塔</div><div class="line">    hanoi(盘子个数-1, 初始塔, 缓存塔, 目标塔)</div><div class="line">    </div><div class="line">def hanoi(n, a='A', b='B', c='C'): </div><div class="line">    if n == 1:</div><div class="line">        print a, '--&gt;', c</div><div class="line">        return</div><div class="line">    hanoi(n-1, a, c, b)</div><div class="line">    print  a, '--&gt;', c</div><div class="line">    hanoi(n-1, b, a, c)</div><div class="line">hanoi(4)</div></pre></td></tr></table></figure>
-<p>运行结果为：S</p>
+<p>运行结果为：</p>
 <p><img src="https://duanxs.oss-cn-qingdao.aliyuncs.com/blog/4.png" alt="结果"></p>
 <p>return 0;</p>
 
